@@ -1,0 +1,11 @@
+vbox|Might attempt blocking an simulation environment
+virtualbox|Might attempt blocking a simulation environment
+sandboxie|Might attempt to block the Sandboxie environment
+sbiesvc|Might attempt to block the Sandboxie environment
+IntPtr|Uses pointers (possible P/Invoke references?)
+DisableTaskMgr|Disables the task manager
+CHANGEDATE|Might change the windows date and time
+MUTEX|Contains mutex
+ESKTOPCAPTURE|Captures desktop image
+WEBCAM|Might access the webcam
+Software\Microsoft\Windows\CurrentVersion\Run|Accesses the startup registry key

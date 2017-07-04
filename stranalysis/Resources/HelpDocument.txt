@@ -1,0 +1,8 @@
+Usage: stranalysis.exe <flags> <file_path>
+Example: stranalysis.exe -dump C:/malware.exe
+
+NOTE: The <file_path> argument should always be last.
+
+Flags:
+-dump > Dumps the strings to a <file_path>_dump.txt file
+-log > Logs the console output into a <file_path>_log.txt file

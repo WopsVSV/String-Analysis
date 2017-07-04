@@ -1,0 +1,19 @@
+// Methods
+
+Assembly.Load|Loads an external assembly
+CodeDom|References the CodeDOM compiler
+ResourceBuilder|Builds resources at runtime
+RegOpenKey|Modifies the registry
+DllImport|Imports an external DLL using P/Invoke
+GetProcesses|Retrieves the active processses
+EndReceive|Receives data over an active connection
+BeginReceive|Receives data over an active connection
+WriteProcessMemory+ReadProcessMemory|Reads and writes to a process' memory
+
+// P/Invoke methods
+
+LoadLibrary|Loads an external library (kernel32.dll)
+GetProcAddress|Gets the address of an exported function (kernel32.dll)
+GetAsyncKeyState|Retrieves keyboard input (user32.dll)
+VirtualAllocEx|Modifies the state of a memory region (kernel32.dll)
+CloseHandle|Closes an open object handle (kernel32.dll)
