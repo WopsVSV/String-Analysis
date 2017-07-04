@@ -36,7 +36,7 @@ namespace stranalysis.Core
 
             // Start the process and parse input through filters
 
-            if (!inputFile.EndsWith(".txt")) {
+            if (!inputFile.EndsWith(".txt")) { // remove this line as well
                 extractionProcess.Start();
                 while (!extractionProcess.StandardOutput.EndOfStream) {
                     line = extractionProcess.StandardOutput.ReadLine();
@@ -44,7 +44,7 @@ namespace stranalysis.Core
                         strings.Add(line);
                 }
             }
-            else {
+            else { // TODO: remove, this is temporary
                 using (var rdr = new StreamReader(inputFile))
                     while (!rdr.EndOfStream)
                         strings.Add(rdr.ReadLine());

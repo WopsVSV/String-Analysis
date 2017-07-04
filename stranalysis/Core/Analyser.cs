@@ -16,15 +16,16 @@ namespace stranalysis.Core
     /// </summary>
     public class Analyser
     {
-        private string extractorFile; // The assembly needed to extract strings
-        private readonly string inputFile;     // The assembly to be analysed
-        private List<string> strings; // The actual string list
-        private readonly Extractor extractor;
+        private string extractorFile;           // The assembly needed to extract strings
+        private readonly string inputFile;      // The assembly to be analysed
+        private List<string> strings;           // The actual string list
+        private readonly Extractor extractor;   // The extraction component
 
         // Modules
         private readonly List<Module> managedModules;
         private readonly List<Module> unmanagedModules;
         private readonly List<Module> sharedModules;
+        private readonly List<List<Module>> modules;
 
         /// <summary>
         /// Assigns the private fields extractorFile and inputFile values
@@ -34,23 +35,36 @@ namespace stranalysis.Core
             this.inputFile = inputFile;
             
             extractor = new Extractor(extractorFile);
-
-            // Define module lists
-            managedModules = new List<Module>();
-            unmanagedModules = new List<Module>();
-            sharedModules = new List<Module>();
-
+            
             // Define shared modules
-            sharedModules.Add(new LinksPathsModule());
-            sharedModules.Add(new BlacklistModule());
-            sharedModules.Add(new MiscellaneousModule());
+            sharedModules = new List<Module>
+            {
+                new LinksPathsModule(),
+                new BlacklistModule(),
+                new MiscellaneousModule()
+            };
 
             // Define managed modules
-            managedModules.Add(new ManagedResourceModule());
-            managedModules.Add(new ManagedMethodsModule());
-            managedModules.Add(new PInvokeModule());
+            managedModules = new List<Module>
+            {
+                new ManagedResourceModule(),
+                new ManagedMethodsModule(),
+                new PInvokeModule()
+            };
 
             // Define unmanaged modules
+            unmanagedModules = new List<Module>
+            {
+
+            };
+
+            // Define the module list
+            modules = new List<List<Module>>
+            {
+                sharedModules,
+                managedModules,
+                unmanagedModules
+            };
         }
 
         /// <summary>
@@ -65,23 +79,18 @@ namespace stranalysis.Core
             strings = extractor.GetStrings(inputFile);
 
             // Write and get modules
+            // TODO : REWRITE
             var moduleList = WriteAndGetModules();
 
-            // Runs the specific modules
-            foreach (var module in moduleList)
-                module.Run(strings);
-            
-
-            // Runs the shared modules
-            foreach (var module in sharedModules)
-                module.Run(strings);
-            
-
+            // Runs the modules
+            foreach (var listModuleTypes in modules)
+                foreach(var module in listModuleTypes)
+                    module.Run(strings);
 
         }
 
         /// <summary>
-        /// Writes the phase 1 text
+        /// Writes text to console
         /// </summary>
         private List<Module> WriteAndGetModules() {
 
@@ -89,7 +98,7 @@ namespace stranalysis.Core
             try {
                 asmInfo = AssemblyHelper.GetAssemblyInfo(inputFile);
             } catch {
-                asmInfo = new AssemblyInfo {SizeKB = "Error", Type = "Error"};
+                asmInfo = new AssemblyInfo { SizeKB = "Error", Type = "Error" };
             }
 
             // TODO: REMOVE

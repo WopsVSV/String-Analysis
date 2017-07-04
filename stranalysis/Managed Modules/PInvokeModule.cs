@@ -24,14 +24,16 @@ namespace stranalysis.Managed_Modules
             // Read library names from resources
             foreach (var line in Properties.Resources.PInvokeLibraries.Split('\n'))
             {
-                if (!string.IsNullOrEmpty(line.Replace("\r",string.Empty)) && !line.StartsWith("//"))
-                    libraries.Add(line.Replace("\r",string.Empty));
+                // Check for invalid lines
+                if (string.IsNullOrEmpty(line.Replace("\r", string.Empty)) || line.StartsWith("//"))
+                    continue;
+
+                libraries.Add(line.Replace("\r",string.Empty));
             }
 
-            string lib;
             for (int i = 0; i < strings.Count; i++) {
                 for (var li = 0; li < libraries.Count; li++) {
-                    lib = libraries[li];
+                    string lib = libraries[li];
                     if (string.Equals(lib, strings[i], StringComparison.InvariantCultureIgnoreCase) || string.Equals(lib.Split('.')[0], strings[i],
                             StringComparison.InvariantCultureIgnoreCase)) {
                         Program.WriteLine($"Imported: {lib}");

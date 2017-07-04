@@ -49,6 +49,7 @@
     <Compile Include="Core\Program.cs" />
     <Compile Include="Managed Modules\ManagedMethodsModule.cs" />
     <Compile Include="Managed Modules\ManagedResourceModule.cs" />
+    <Compile Include="Core\Method.cs" />
     <Compile Include="Managed Modules\PInvokeModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
